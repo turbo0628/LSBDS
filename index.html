@@ -33,13 +33,13 @@
       <section id="main_content" class="inner">
         <p>LSBDS is developed for searching large-scale biological sequence databases with the Smith-Waterman algorithm on Xeon Phi-based neo-heterogenous architectures. In order to make full use of the compute power of both the multi-core CPU and the many-core Xeon Phi hardware, we use a collaborative computing scheme as well as hybrid parallelism. At the CPU side, we employ SSE intrinsics and multi-threading to implement SIMD parallelism. At the Xeon Phi side, we use Knights Corner vector instructions to gain more data parallelism. Evaluations on real protein sequence databases show that our method achieves a peak performance up to 220 GCUPS on a neo-heterogeneous platform consisting of two Intel E5-2620 CPUs and two Intel Xeon Phi 7110P cards. Our implementation also exhibits good scalability in terms of database size and query length.</p>
 
-<h1>
-<a id="citation" class="anchor" href="#citation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Citation</h1>
+<h2>
+<a id="citation" class="anchor" href="#citation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Citation</h2>
 
 <p>Our paper is still under submission</p>
 
-<h2>
-<a id="related-papers" class="anchor" href="#related-papers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Related Papers</h2>
+<h3>
+<a id="related-papers" class="anchor" href="#related-papers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Related Papers</h3>
 
 <p>XSW: Accelerating Biological Database Search on Xeon Phi
 Lipeng Wang, Yuandong Chan, Xiaohui Duan, Haidong Lan, Xiangxu Meng, and Weiguo Liu.
@@ -48,32 +48,113 @@ The 28th IEEE International Parallel &amp; Distributed Processing Symposium (IPD
 <p>SWAPHI: Smith-Waterman protein database search on Xeon Phi coprocessors
 Yongchao Liu and Bertil Schmidt. 25th IEEE International Conference on Application-specific Systems, Architectures and Processors (ASAP 2014), 2014, pp. 184-185.</p>
 
-<h1>
-<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h1>
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
 
-<p>We provide binaries compiled with ICC 15.0.0 on CENTOS 6.4.</p>
+<p>We provide binaries compiled with ICC 15.0.0 on CENTOS 6.4. MPSS 3.2.1-1 or later and Composer XE 2015 are recommended to build runtime environment.</p>
 
-<p>The makeDB is an auxiliary program to carry out the database preprocessing operation. Please process your database file before searching.</p>
+<p>The DBmaker is an auxiliary program to carry out the database preprocessing operation. Please process your database file before searching.
+This program generates three files with .map .seq .title extensions which stored all the information in the database. You could remove the original FASTA file safely. We'll develop a reverse program for format transformation soon.</p>
 
-<p>./makeDB [path_to_databaase_file]</p>
+<pre><code>./DBmaker [path_to_databaase_file]
+</code></pre>
 
-<p>Currently only database in fasta format are accepted.</p>
+<p>Currently only databases in fasta format are accepted.</p>
 
-<p>The LSDBS search the processed database using both CPUs and Intel Phi cards.
-The parameter list is followed:</p>
+<p>The LSDBS search the processed database using both CPUs and Intel Phi cards.  You could specify either of them or their common suffix name in the .
+Parameter list:</p>
 
-<p>./LSDBS 
+<pre><code>./LSDBS 
 Input Files:
 -q  (QUERY_FILE) 
--d (DATABASE_FILE)</p>
+-d (DATABASE_FILE)
 
-<p>Scoring Scheme:
+Scoring Scheme:
 -m  (Scoring matrix name, default = blosum62, supported)
 -g  (gap open penalty, default = 10)
--e  (gap extend penalty, default = 2)</p>
+-e  (gap extend penalty, default = 2)
+-v       (verbose, show current search progress and system configuration)
+</code></pre>
 
-<h1>
-<a id="contacts" class="anchor" href="#contacts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contacts</h1>
+<h3>
+<a id="typical-search-example" class="anchor" href="#typical-search-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Typical Search Example</h3>
+
+<p>You could access to the swiss protein database using the following url:</p>
+
+<p>ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz</p>
+
+<p>This database is quite small and not likely to fully feed the devices.</p>
+
+<p>We use the env_nr database from NCBI as an example:</p>
+
+<p>Firstly download the database</p>
+
+<pre><code>$wget ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/env_nr.gz
+</code></pre>
+
+<p>And then unzip the tarball</p>
+
+<pre><code>$gunzip env_nr.gz
+</code></pre>
+
+<p>Process the database</p>
+
+<pre><code>$./DBmaker env_nr
+</code></pre>
+
+<p>Screen layout:</p>
+
+<pre><code>flushing out chunk 0 of size 256MB
+flushing out chunk 1 of size 255MB
+flushing out chunk 2 of size 255MB
+flushing out chunk 3 of size 255MB
+flushing out chunk 4 of size 255MB
+flushing out chunk 5 of size 24MB
+last batch num 72
+total sequence num is 6865992 68c448
+closing files
+file closed
+</code></pre>
+
+<p>Now you can search the database with the example queries.</p>
+
+<pre><code>$./LSDBS -q example_queries/q10-P27895.fasta -db env_nr
+</code></pre>
+
+<p>Screen layout:</p>
+
+<pre><code>query path /home/lan/query_seqs/q17-P08519.fasta
+db path /home/lan/example_db/env_nr
+number of available CPUs: 24
+number of available MIC devices: 2
+Sequence Database size 1.28GB
+top num 10
+long query length 4552, pass 7, major length 651, last length 646, average length 650
+long query length 4552, pass 7, major length 651, last length 646, average length 650
+SSE computing time 25.707000s, AARes 531665920, GCUPs 94.143356
+MIC computing time 28.863000s, AARes 429863936, GCUPs 67.794084
+MIC computing time 28.896000s, AARes 431134720, GCUPs 67.916848
+#Recalc# symbol size 1.86MB
+#Recalc# sequence num 296
+Recalculator takes 0.24s
+total calculation time: 32.087000, GCUPS 194.263434
+, total residue 1369360896
+----------------top 10 scores---------------
+score 630 -- &gt;gi|138634464|gb|ECA95015.1| hypothetical protein GOS_6324106, partial [marine metagenome]
+score 538 -- &gt;gi|134394309|gb|EBB10382.1| hypothetical protein GOS_288815, partial [marine metagenome]
+score 464 -- &gt;gi|141083129|gb|ECP50619.1| hypothetical protein GOS_5820514, partial [marine metagenome]
+score 350 -- &gt;gi|143826383|gb|EDG90597.1| hypothetical protein GOS_700359 [marine metagenome]
+score 306 -- &gt;gi|684297128|gb|KGA16158.1| hypothetical protein GM51_13185 [freshwater metagenome]
+score 299 -- &gt;gi|138611756|gb|ECA80116.1| hypothetical protein GOS_3417296, partial [marine metagenome]
+score 297 -- &gt;gi|816460845|gb|KKK90825.1| hypothetical protein LCGC14_2719120, partial [marine sediment metagenome]
+score 287 -- &gt;gi|138400420|gb|EBZ40745.1| hypothetical protein GOS_5461389, partial [marine metagenome]
+score 287 -- &gt;gi|144047815|gb|EDI48792.1| hypothetical protein GOS_424353 [marine metagenome]
+score 280 -- &gt;gi|136269826|gb|EBN02706.1| hypothetical protein GOS_8313652, partial [marine metagenome]
+--------------------------------------------
+</code></pre>
+
+<h2>
+<a id="contacts" class="anchor" href="#contacts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contacts</h2>
 
 <p>Please contact Weiguo,Liu ( <a href="mailto:weiguo.liu@sdu.edu.cn">weiguo.liu@sdu.edu.cn</a>) for support. We welcome any bug reporting and improvement suggestions.</p>
       </section>
