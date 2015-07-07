@@ -30,6 +30,7 @@ Currently only database in fasta format are accepted.
 The LSDBS search the processed database using both CPUs and Intel Phi cards.  You could specify either of them or their common suffix name in the .
 Parameter list:
 
+<pre><code>
 ./LSDBS 
 Input Files:
 -q <str> (QUERY_FILE) 
@@ -40,30 +41,40 @@ Scoring Scheme:
 -g <int> (gap open penalty, default = 10)
 -e <int> (gap extend penalty, default = 2)
 -v       (verbose, show current search progress and system configuration)
+</code></pre>
+
 ###Typical Search Example
 
 You could access to the swiss protein database using the following url:
+
 ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz
+
 This database is quite small and not likely to fully feed the devices.
 
 A larger database is uniprot tremble which is 10GB or so:
+
 ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_trembl.fasta.gz
 
 We use the env_nr database from NCBI as an example:
 
 first download the database
-<pre><code>This is a code block.
-</code></pre>
+<pre><code>
 $wget ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/env_nr.gz
+</code></pre>
 
 And then unzip the tarball
+<pre><code>
 $gunzip env_nr.gz
+</code></pre>
 
 Process the database
 
+<pre><code>
 $./DBmaker env_nr
-
+</code></pre>
 Screen layout:
+
+<pre><code>
 flushing out chunk 0 of size 256MB
 flushing out chunk 1 of size 255MB
 flushing out chunk 2 of size 255MB
@@ -74,12 +85,15 @@ last batch num 72
 total sequence num is 6865992 68c448
 closing files
 file closed
-
+</code></pre>
 
 Now you can search the database with the example queries.
+<pre><code>
 $./LSDBS -q example_queries/q10-P27895.fasta -db env_nr
+</code></pre>
 
 Screen layout:
+<pre><code>
 query path /home/lan/query_seqs/q17-P08519.fasta
 db path /home/lan/example_db/env_nr
 number of available CPUs: 24
@@ -91,8 +105,8 @@ long query length 4552, pass 7, major length 651, last length 646, average lengt
 SSE computing time 25.707000s, AARes 531665920, GCUPs 94.143356
 MIC computing time 28.863000s, AARes 429863936, GCUPs 67.794084
 MIC computing time 28.896000s, AARes 431134720, GCUPs 67.916848
-\#Recalc# symbol size 1.86MB
-\#Recalc# sequence num 296
+#Recalc# symbol size 1.86MB
+#Recalc# sequence num 296
 Recalculator takes 0.24s
 total calculation time: 32.087000, GCUPS 194.263434
 , total residue 1369360896
@@ -108,6 +122,7 @@ score 287 -- >gi|138400420|gb|EBZ40745.1| hypothetical protein GOS_5461389, part
 score 287 -- >gi|144047815|gb|EDI48792.1| hypothetical protein GOS_424353 [marine metagenome]
 score 280 -- >gi|136269826|gb|EBN02706.1| hypothetical protein GOS_8313652, partial [marine metagenome]
 --------------------------------------------
+</code></pre>
 
 ##Contacts
 
