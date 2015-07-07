@@ -52,6 +52,8 @@ ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/comple
 We use the env_nr database from NCBI as an example:
 
 first download the database
+<pre><code>This is a code block.
+</code></pre>
 $wget ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/env_nr.gz
 
 And then unzip the tarball
