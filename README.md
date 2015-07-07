@@ -23,15 +23,14 @@ We provide binaries compiled with ICC 15.0.0 on CENTOS 6.4. MPSS 3.3.4 or later 
 The makeDB is an auxiliary program to carry out the database preprocessing operation. Please process your database file before searching.
 This program generates three files with .map .seq .title extensions which stored all the information in the database. You could remove the original FASTA file safely. We'll develop a reverse program for format transformation soon.
 
-./makeDB [path_to_databaase_file]
--v (verbose)
+<pre><code>./DBmaker [path_to_databaase_file]
+</code></pre>
 Currently only database in fasta format are accepted.
 
 The LSDBS search the processed database using both CPUs and Intel Phi cards.  You could specify either of them or their common suffix name in the .
 Parameter list:
 
-<pre><code>
-./LSDBS 
+<pre><code>./LSDBS 
 Input Files:
 -q <str> (QUERY_FILE) 
 -d (DATABASE_FILE)
@@ -58,24 +57,20 @@ ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/comple
 We use the env_nr database from NCBI as an example:
 
 first download the database
-<pre><code>
-$wget ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/env_nr.gz
+<pre><code>$wget ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/env_nr.gz
 </code></pre>
 
 And then unzip the tarball
-<pre><code>
-$gunzip env_nr.gz
+<pre><code>$gunzip env_nr.gz
 </code></pre>
 
 Process the database
 
-<pre><code>
-$./DBmaker env_nr
+<pre><code>$./DBmaker env_nr
 </code></pre>
 Screen layout:
 
-<pre><code>
-flushing out chunk 0 of size 256MB
+<pre><code>flushing out chunk 0 of size 256MB
 flushing out chunk 1 of size 255MB
 flushing out chunk 2 of size 255MB
 flushing out chunk 3 of size 255MB
@@ -88,13 +83,11 @@ file closed
 </code></pre>
 
 Now you can search the database with the example queries.
-<pre><code>
-$./LSDBS -q example_queries/q10-P27895.fasta -db env_nr
+<pre><code>$./LSDBS -q example_queries/q10-P27895.fasta -db env_nr
 </code></pre>
 
 Screen layout:
-<pre><code>
-query path /home/lan/query_seqs/q17-P08519.fasta
+<pre><code>query path /home/lan/query_seqs/q17-P08519.fasta
 db path /home/lan/example_db/env_nr
 number of available CPUs: 24
 number of available MIC devices: 2
