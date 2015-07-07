@@ -18,14 +18,14 @@ Yongchao Liu and Bertil Schmidt. 25th IEEE International Conference on Applicati
 
 ##Usage
 
-We provide binaries compiled with ICC 15.0.0 on CENTOS 6.4. MPSS 3.3.4 or later and Composer XE 2015 are recommended to build runtime environment.
+We provide binaries compiled with ICC 15.0.0 on CENTOS 6.4. MPSS 3.2.1-1 or later and Composer XE 2015 are recommended to build runtime environment.
 
-The makeDB is an auxiliary program to carry out the database preprocessing operation. Please process your database file before searching.
+The DBmaker is an auxiliary program to carry out the database preprocessing operation. Please process your database file before searching.
 This program generates three files with .map .seq .title extensions which stored all the information in the database. You could remove the original FASTA file safely. We'll develop a reverse program for format transformation soon.
 
 <pre><code>./DBmaker [path_to_databaase_file]
 </code></pre>
-Currently only database in fasta format are accepted.
+Currently only databases in fasta format are accepted.
 
 The LSDBS search the processed database using both CPUs and Intel Phi cards.  You could specify either of them or their common suffix name in the .
 Parameter list:
@@ -50,13 +50,9 @@ ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/comple
 
 This database is quite small and not likely to fully feed the devices.
 
-A larger database is uniprot tremble which is 10GB or so:
-
-ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_trembl.fasta.gz
-
 We use the env_nr database from NCBI as an example:
 
-first download the database
+Firstly download the database
 <pre><code>$wget ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/env_nr.gz
 </code></pre>
 
