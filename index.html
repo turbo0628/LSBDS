@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="LSBDS : Large Scale Biology Database Search on Xeon Phi platform">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>LSBDS</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/turbo0628/LSBDS">View on GitHub</a>
+
+          <h1 id="project_title">LSBDS</h1>
+          <h2 id="project_tagline">Large Scale Biology Database Search on Xeon Phi platform</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/turbo0628/LSBDS/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/turbo0628/LSBDS/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p>LSBDS is developed for searching large-scale biological sequence databases with the Smith-Waterman algorithm on Xeon Phi-based neo-heterogenous architectures. In order to make full use of the compute power of both the multi-core CPU and the many-core Xeon Phi hardware, we use a collaborative computing scheme as well as hybrid parallelism. At the CPU side, we employ SSE intrinsics and multi-threading to implement SIMD parallelism. At the Xeon Phi side, we use Knights Corner vector instructions to gain more data parallelism. Evaluations on real protein sequence databases show that our method achieves a peak performance up to 220 GCUPS on a neo-heterogeneous platform consisting of two Intel E5-2620 CPUs and two Intel Xeon Phi 7110P cards. Our implementation also exhibits good scalability in terms of database size and query length.</p>
+
+<h1>
+<a id="citation" class="anchor" href="#citation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Citation</h1>
+
+<p>Our paper is still under submission</p>
+
+<h2>
+<a id="related-papers" class="anchor" href="#related-papers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Related Papers</h2>
+
+<p>XSW: Accelerating Biological Database Search on Xeon Phi
+Lipeng Wang, Yuandong Chan, Xiaohui Duan, Haidong Lan, Xiangxu Meng, and Weiguo Liu.
+The 28th IEEE International Parallel &amp; Distributed Processing Symposium (IPDPS 2014), Phoenix,USA, May, 2014.</p>
+
+<p>SWAPHI: Smith-Waterman protein database search on Xeon Phi coprocessors
+Yongchao Liu and Bertil Schmidt. 25th IEEE International Conference on Application-specific Systems, Architectures and Processors (ASAP 2014), 2014, pp. 184-185.</p>
+
+<h1>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h1>
+
+<p>We provide binaries compiled with ICC 15.0.0 on CENTOS 6.4.</p>
+
+<p>The makeDB is an auxiliary program to carry out the database preprocessing operation. Please process your database file before searching.</p>
+
+<p>./makeDB [path_to_databaase_file]</p>
+
+<p>Currently only database in fasta format are accepted.</p>
+
+<p>The LSDBS search the processed database using both CPUs and Intel Phi cards.
+The parameter list is followed:</p>
+
+<p>./LSDBS 
+Input Files:
+-q  (QUERY_FILE) 
+-d (DATABASE_FILE)</p>
+
+<p>Scoring Scheme:
+-m  (Scoring matrix name, default = blosum62, supported)
+-g  (gap open penalty, default = 10)
+-e  (gap extend penalty, default = 2)</p>
+
+<h1>
+<a id="contacts" class="anchor" href="#contacts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contacts</h1>
+
+<p>Please contact Weiguo,Liu ( <a href="mailto:weiguo.liu@sdu.edu.cn">weiguo.liu@sdu.edu.cn</a>) for support. We welcome any bug reporting and improvement suggestions.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">LSBDS maintained by <a href="https://github.com/turbo0628">turbo0628</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
