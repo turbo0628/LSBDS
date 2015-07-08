@@ -80,7 +80,7 @@ Now you can search the database with the example queries.
 </code></pre>
 
 Screen layout:
-<code><pre>query path example_queries/q20-Q9UKN1.fasta
+<pre><code>query path example_queries/q20-Q9UKN1.fasta
 db path ./env_nr
 number of available CPUs: 24
 number of available MIC devices: 2
