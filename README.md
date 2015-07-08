@@ -13,9 +13,6 @@ XSW: Accelerating Biological Database Search on Xeon Phi
 Lipeng Wang, Yuandong Chan, Xiaohui Duan, Haidong Lan, Xiangxu Meng, and Weiguo Liu.
 The 28th IEEE International Parallel & Distributed Processing Symposium (IPDPS 2014), Phoenix,USA, May, 2014.
 
-SWAPHI: Smith-Waterman protein database search on Xeon Phi coprocessors
-Yongchao Liu and Bertil Schmidt. 25th IEEE International Conference on Application-specific Systems, Architectures and Processors (ASAP 2014), 2014, pp. 184-185.
-
 ##Usage
 
 We provide binaries compiled with ICC 15.0.0 on CENTOS 6.4. MPSS 3.2.1-1 or later and Composer XE 2015 are recommended to build runtime environment.
