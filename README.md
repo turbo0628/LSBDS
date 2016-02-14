@@ -5,7 +5,7 @@ LSBDS is developed for searching large-scale biological sequence databases with 
 
 ##Citation
 
-Our paper is still under submission
+H. Lan, W. Liu*, B. Schmidt, and B. Wang: Accelerating Large-Scale Biological Database Search on Xeon Phi-based Neo-Heterogeneous Architectures, 2015 IEEE International Conference on Bioinformatics and Biomedicine (BIBM 2015), Washington D.C., USA, November 2015.
 
 ###Related Papers
 
